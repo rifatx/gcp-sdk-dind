@@ -1,6 +1,7 @@
-FROM docker:18.05-dind as dind
+FROM google/cloud-sdk:198.0.0 as gcp
 
-FROM google/cloud-sdk:198.0.0
-COPY --from=dind / /
+FROM docker:18.05-dind
+COPY --from=gcp / /
+COPY daemon.json /etc/docker/
 ENTRYPOINT ["dockerd-entrypoint.sh"]
 CMD []
